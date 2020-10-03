@@ -15,7 +15,10 @@ const uploadMiddleware = multer({ storage }).single('image');
 
 const getExtension = filename => filename.split('.').pop();
 
-app.get('/upload', uploadMiddleware, (req, res) => {
+app.post('/upload', uploadMiddleware, (req, res) => {
+
+    console.log('req.file', req.file);
+
     const params = {
         Bucket: env.uploadBucket.bucket,
         Key: `${uuid()}.${getExtension(req.file.originalname)}`,
@@ -24,8 +27,10 @@ app.get('/upload', uploadMiddleware, (req, res) => {
 
     s3.upload(params, (error, data) => {
         if (error) {
+            console.log('-error-2-', error);
             res.status(500).json({ ok: false });
         } else {
+            console.log('-ok-2-');
             res.status(200).json({ ok: true });
         }
     });
