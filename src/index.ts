@@ -34,5 +34,5 @@ app.get('/upload', uploadMiddleware, (req, res) => {
 
 
 app.listen(env.http.port, () => {
-    console.log('-=-');
+    console.log('-=- App runs on port -=-', env.http.port);
 });
